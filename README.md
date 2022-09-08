@@ -45,3 +45,48 @@ sudo apt-get install -y nodejs yarn
 gem install rails -v 7.0.2.4
 rbenv rehash
 ```
+
+## Bootstrapping
+
+Following the guide at ~https://egghead.io/blog/rails-graphql-typescript-react-apollo~ https://towardsdev.com/set-up-rails-7-with-graphql-apollo-client-and-react-72f63a9a3b54 (looks like the first guide was pre-Rails v7, which no longer includes webpack).
+
+Still used the first guide to set up the rails application and model.
+
+```
+rails new books
+cd books
+rails g model book title:string
+rails db:migrate
+```
+
+Add a book inside `rails c` (console)
+```
+Book.create!(title: "Active Rails")
+```
+
+Adding graphql:
+```
+bundle add graphql
+rails generate graphql:install
+bundle install
+```
+
+Generate gql type:
+```
+rails generate graphql:object book
+```
+
+Start Rails server:
+```
+rails server
+```
+
+In browser, navigate to http://localhost:3000/graphiql, then run the query:
+```
+query allBooks {
+  books {
+    id
+    title
+  }
+}
+```
